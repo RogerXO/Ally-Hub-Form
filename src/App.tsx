@@ -1,8 +1,17 @@
+import { useState, useEffect } from "react"
+
 import { Container, Form, FormDiv, Input, Label, Parent, Select } from "./Style/Styles"
 
-
+interface ICountryFetch {
+  code: string,
+  name: string,
+  name_ptbr: string
+}
 
 const App = () => {
+
+  const [countries, setCountries] = useState<ICountryFetch[]>([])
+  const [cities, setCities] = useState([])
 
   // const ReadyInput = (label: string, type: InputProps, placeholder: string) => {
   //   return (
@@ -13,11 +22,26 @@ const App = () => {
   //   )
   // }
 
+
+  //Countries fetch
+  useEffect(() => {
+    fetch("https://amazon-api.sellead.com/country", {
+      method: 'GET',
+      headers: {
+        "Content-type": "Application/json"
+      }
+    }).then(resp => resp.json())
+      .then(data => {
+        setCountries(data)
+      })
+      .catch(err => console.log(err))
+  }, [])
+
   return (
     <Container>
-      {/* <ReadyInput label='Nome' type="text" placeholder="Nome completo" /> */}
       <FormDiv>
         <div>Dados pessoais</div>
+
         <Form>
 
           <Parent>
@@ -44,9 +68,11 @@ const App = () => {
             <Label>Pais</Label>
             <Select>
               <option value='' hidden>Selecione</option>
-              <option value=''>Brazil</option>
-              <option value=''>Brasil do Norte</option>
-              <option value=''>Brasil do Sul</option>
+              {countries.map((country, index) => {
+                return (
+                  <option key={index} value={index}>{country.name_ptbr}</option>
+                )
+              })}
             </Select>
           </Parent>
 

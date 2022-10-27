@@ -1,9 +1,15 @@
+import { ReactNode } from 'react'
 import styled from 'styled-components'
 
-interface InputProps {
+
+interface IInputProps {
     label: string,
     type: 'email' | 'text' | 'number',
     placeholder: string
+}
+
+interface ISelect {
+    children?: ReactNode
 }
 
 export const Container = styled.div`
@@ -17,14 +23,14 @@ export const Container = styled.div`
 
 export const FormDiv = styled.div`
     background-color: lightgrey;
-    height: 60%;
+    height: 75%;
     width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     div{
-        margin-top: 5%;
+        margin-top: 6%;
     }
 `
 
@@ -33,10 +39,11 @@ export const Form = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    justify-content: space-evenly;
+    margin-bottom: 5%;
 `
 
-export const Parent = styled.div`
+export const Parent = styled.section`
     display: flex;
     flex-direction: column;
     gap: 3px;
@@ -47,7 +54,7 @@ export const Label = styled.label`
     font-size: 15px;
 `
 
-export const Input = styled.input.attrs<InputProps>(props => { type: { props.type } })`
+export const Input = styled.input.attrs<IInputProps>(props => { type: { props.type } })`
     height: 100%;
     width: 75%;
     padding: 5px;
@@ -62,7 +69,7 @@ export const Input = styled.input.attrs<InputProps>(props => { type: { props.typ
 //     )
 // }
 
-export const Select = styled.select`
+export const Select = styled.select<ISelect>`
     width: 78%;
     padding: 5px;
 
