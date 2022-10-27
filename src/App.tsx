@@ -8,10 +8,21 @@ interface ICountryFetch {
   name_ptbr: string
 }
 
+interface ICityFetch {
+  code: string,
+  country_code: string,
+  id: number,
+  name: string,
+  name_ptbr: string
+}
+
 const App = () => {
 
   const [countries, setCountries] = useState<ICountryFetch[]>([])
-  const [cities, setCities] = useState([])
+  const [cities, setCities] = useState<ICityFetch[]>([])
+
+  const [selectedCountry, setSelectedCountry] = useState<string>()
+  const [filteredCities, setFilteredCities] = useState<ICityFetch[]>([])
 
   // const ReadyInput = (label: string, type: InputProps, placeholder: string) => {
   //   return (
@@ -21,7 +32,6 @@ const App = () => {
   //     </Parent>
   //   )
   // }
-
 
   //Countries fetch
   useEffect(() => {
@@ -36,6 +46,33 @@ const App = () => {
       })
       .catch(err => console.log(err))
   }, [])
+
+  //Cities fetch
+  useEffect(() => {
+    fetch("https://amazon-api.sellead.com/city", {
+      method: 'GET',
+      headers: {
+        "Content-Type": "Application/json"
+      }
+    }).then(resp => resp.json())
+      .then(data => {
+        setCities(data)
+        console.log(data[0])
+      })
+      .catch(err => console.log(err))
+  }, [])
+
+  useEffect(() => {
+    const filterCities = () => {
+      return cities.filter((city) => {
+        return city.country_code == selectedCountry
+      })
+    }
+
+    setFilteredCities(filterCities)
+  }, [selectedCountry])
+
+  console.log(filteredCities)
 
   return (
     <Container>
@@ -66,11 +103,11 @@ const App = () => {
 
           <Parent>
             <Label>Pais</Label>
-            <Select>
+            <Select value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)} >
               <option value='' hidden>Selecione</option>
               {countries.map((country, index) => {
                 return (
-                  <option key={index} value={index}>{country.name_ptbr}</option>
+                  <option key={index} value={country.code}>{country.name_ptbr}</option>
                 )
               })}
             </Select>
@@ -79,7 +116,12 @@ const App = () => {
           <Parent>
             <Label>Cidade</Label>
             <Select>
-              <option value='' hidden>Selecione</option>
+              <option value='' hidden>{!selectedCountry ? "Selecione um pais" : "Selecione uma cidade"}</option>
+              {selectedCountry && filteredCities.map((city, index) => {
+                return (
+                  <option key={index} value={city.id}>{city.name}</option>
+                )
+              })}
             </Select>
           </Parent>
 

@@ -9,7 +9,7 @@ interface IInputProps {
 }
 
 interface ISelect {
-    children?: ReactNode
+    children?: JSX.Element | JSX.Element[] | ReactNode
 }
 
 export const Container = styled.div`
