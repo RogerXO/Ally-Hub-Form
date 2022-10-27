@@ -17,30 +17,30 @@ export const Container = styled.div`
 
 export const FormDiv = styled.div`
     background-color: lightgrey;
-    height: 65%;
+    height: 60%;
     width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 1px;
+
+    div{
+        margin-top: 5%;
+    }
 `
 
 export const Form = styled.form`
-    background-color: lightgrey;
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+    gap: 1px;
 `
 
 export const Parent = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    font-size: 18px;
+    gap: 3px;
+    margin-left: 15%;
 `
 
 export const Label = styled.label`
@@ -48,21 +48,26 @@ export const Label = styled.label`
 `
 
 export const Input = styled.input.attrs<InputProps>(props => { type: { props.type } })`
-    height: 5%;
-    width: 70%;
-    padding: 3px;
-
+    height: 100%;
+    width: 75%;
+    padding: 5px;
 `
 
-export const ReadyInput = (label: InputProps, type: InputProps, placeholder: InputProps) => {
-    return (
-        <Parent>
-            <Label>{label.label}</Label>
-            <Input type={type.type} placeholder={placeholder.placeholder}></Input>
-        </Parent>
-    )
-}
+// export const ReadyInput = (label: InputProps, type: InputProps, placeholder: InputProps) => {
+//     return (
+//         <Parent>
+//             <Label>{label.label}</Label>
+//             <Input type={type.type} placeholder={placeholder.placeholder}></Input>
+//         </Parent>
+//     )
+// }
 
 export const Select = styled.select`
-    
+    width: 78%;
+    padding: 5px;
+
+    option{
+        min-height: 20px;
+        padding: 3px;
+    }
 `
