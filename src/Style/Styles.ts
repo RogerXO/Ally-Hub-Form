@@ -1,5 +1,8 @@
 import { ReactNode } from 'react'
-import styled from 'styled-components'
+
+import styled, { css } from 'styled-components'
+
+import { ButtonProps } from './../Components/Button';
 
 
 interface IInputProps {
@@ -9,20 +12,20 @@ interface IInputProps {
 }
 
 interface ISelect {
-    children?: JSX.Element | JSX.Element[] | ReactNode
+    children?: ReactNode
 }
 
 export const Container = styled.div`
+    background-color: rgba(132, 162, 172, 0.493);
     height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #575454;
 `
 
 export const FormDiv = styled.div`
-    background-color: lightgrey;
+    background-color: white;
     height: 75%;
     width: 40%;
     display: flex;
@@ -83,8 +86,21 @@ export const Select = styled.select<ISelect>`
     }
 `
 
-export const Button = styled.button`
-    padding: 10px;
-    margin: auto;
-    
+export const ButtonContainer = styled.button<ButtonProps>`
+    padding: 10px 15px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    outline: none;
+    transition: all 0.2s;
+    color: rgb(36, 119, 36);
+    background-color: rgb(170, 214, 170);
+
+    ${(props) => props.disabled && DISABLED};
 `
+
+const DISABLED = css`
+    cursor: not-allowed;
+    background-color: #d4d4d4;
+    color: #f5f5f5;
+`;
