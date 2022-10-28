@@ -16,6 +16,10 @@ interface ISelect {
     children?: ReactNode
 }
 
+type SpanProps = {
+    color: "success" | "error"
+}
+
 export const Container = styled.div`
     background-color: rgba(132, 162, 172, 0.493);
     height: 100vh;
@@ -69,8 +73,14 @@ export const InputField = styled.input.attrs<IInputProps>(props => { type: { pro
 `
 
 export const Span = styled.span<InputProps>`
-    font-size: 12px;
-    transition: 0.2s;
+    font-size: 11px;
+    color: black ;
+`
+
+export const ValidationSpan = styled.span<SpanProps>`
+    transition: all 1seg;
+    font-size: 11px;
+    margin-bottom: 3%;
 
     ${(props) => props.color && COLOR[props.color]}
 `
@@ -83,15 +93,6 @@ const COLOR = {
     color: rgb(36, 119, 36)
     `
 }
-
-// export const ReadyInput = (label: InputProps, type: InputProps, placeholder: InputProps) => {
-//     return (
-//         <Parent>
-//             <Label>{label.label}</Label>
-//             <Input type={type.type} placeholder={placeholder.placeholder}></Input>
-//         </Parent>
-//     )
-// }
 
 export const Select = styled.select<ISelect>`
     width: 78%;
@@ -109,7 +110,7 @@ export const ButtonContainer = styled.button<ButtonProps>`
     border: none;
     font-weight: bold;
     outline: none;
-    transition: all 0.5s;
+    transition: all 1s;
     color: rgb(36, 119, 36);
     background-color: rgb(170, 214, 170);
 

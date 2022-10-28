@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { Button } from "./Components/Button"
 import { Input } from "./Components/Input"
 
-import { Container, Form, FormDiv, InputField, Label, Parent, Select } from "./Style/Styles"
+import { Container, Form, FormDiv, InputField, Label, Parent, Select, ValidationSpan } from "./Style/Styles"
 
 interface ICountryFetch {
   code: string,
@@ -94,14 +94,14 @@ const App = () => {
 
   //Fields validation
   useEffect(() => {
-    if (name.length < 4) return setIsDisabled(true)
-    if (email.length < 10) return setIsDisabled(true)
-    if (phoneNumber.length < 11) return setIsDisabled(true)
-    if (cpf.length < 11) return setIsDisabled(true)
-    if (!selectedCity) return setIsDisabled(true)
-    if (!selectedCountry) return setIsDisabled(true)
+    if (name.length < 4) return validationError()
+    if (email.length < 10) return validationError()
+    if (phoneNumber.length < 11) return validationError()
+    if (cpf.length < 11) return validationError()
+    if (!selectedCity) return validationError()
+    if (!selectedCountry) return validationError()
 
-    setIsDisabled(false)
+    validationSuccess()
   }, [name, email, phoneNumber, cpf, selectedCountry, selectedCity])
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -121,29 +121,35 @@ const App = () => {
             placeholder="Nome"
             value={name}
             spanText="Pelo menos 4 caracteres"
-            color={spanColor}
             onChange={(e) => setName(e.target.value)}
           ></Input>
 
-          {/* <Parent>
-            <Label>Nome</Label>
-            <InputField type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
-          </Parent> */}
+          <Input
+            label="Email"
+            type="email"
+            placeholder="email"
+            value={email}
+            spanText="Pelo menos 10 caracteres"
+            onChange={(e) => setEmail(e.target.value)}
+          ></Input>
 
-          <Parent>
-            <Label>Email</Label>
-            <InputField type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </Parent>
+          <Input
+            label="Telefone"
+            type="tel"
+            placeholder="31912345678"
+            value={phoneNumber}
+            spanText="Pelo menos 11 caracteres"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          ></Input>
 
-          <Parent>
-            <Label>Telefone</Label>
-            <InputField type="number" placeholder="31912345678" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-          </Parent>
-
-          <Parent>
-            <Label>CPF</Label>
-            <InputField type="number" placeholder="12345678912" value={cpf} onChange={(e) => setCpf(e.target.value)} />
-          </Parent>
+          <Input
+            label="CPF"
+            type="number"
+            placeholder="12345678912"
+            value={cpf}
+            spanText="Pelo menos 11 caracteres"
+            onChange={(e) => setCpf(e.target.value)}
+          ></Input>
 
           <Parent>
             <Label>Pais</Label>
@@ -173,6 +179,9 @@ const App = () => {
 
         </Form>
 
+        <ValidationSpan color={spanColor}>
+          {isDisabled ? "Preencha todos os campos corretamente" : "Todos os campos foram preenchidos"}
+        </ValidationSpan>
 
         <Button onClick={handleButtonClick} disabled={isDisabled}>
           Enviar
