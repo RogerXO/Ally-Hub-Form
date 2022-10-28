@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import styled, { css } from 'styled-components'
+import { InputProps } from '../Components/Input';
 
 import { ButtonProps } from './../Components/Button';
 
@@ -61,11 +62,27 @@ export const Label = styled.label`
     font-size: 15px;
 `
 
-export const Input = styled.input.attrs<IInputProps>(props => { type: { props.type } })`
+export const InputField = styled.input.attrs<IInputProps>(props => { type: { props.type } })`
     height: 100%;
     width: 75%;
     padding: 5px;
 `
+
+export const Span = styled.span<InputProps>`
+    font-size: 12px;
+    transition: 0.2s;
+
+    ${(props) => props.color && COLOR[props.color]}
+`
+
+const COLOR = {
+    error: css`
+    color: red
+    `,
+    success: css`
+    color: rgb(36, 119, 36)
+    `
+}
 
 // export const ReadyInput = (label: InputProps, type: InputProps, placeholder: InputProps) => {
 //     return (
@@ -92,7 +109,7 @@ export const ButtonContainer = styled.button<ButtonProps>`
     border: none;
     font-weight: bold;
     outline: none;
-    transition: all 0.2s;
+    transition: all 0.5s;
     color: rgb(36, 119, 36);
     background-color: rgb(170, 214, 170);
 
@@ -104,3 +121,4 @@ const DISABLED = css`
     background-color: #d4d4d4;
     color: #f5f5f5;
 `;
+

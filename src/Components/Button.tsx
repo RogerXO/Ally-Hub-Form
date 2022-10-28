@@ -4,8 +4,7 @@ import { ButtonContainer } from "../Style/Styles"
 
 export type ButtonProps = {
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    children?: JSX.Element | JSX.Element[] | ReactNode;
-    color?: "primary" | "secondary";
+    children?: ReactNode;
     disabled?: boolean;
 }
 
