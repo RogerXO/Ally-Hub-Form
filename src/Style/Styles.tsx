@@ -30,7 +30,11 @@ export const FormDiv = styled.div`
     align-items: center;
 
     div{
-        margin-top: 6%;
+        margin-top: 5%;
+    }
+
+    button{
+        margin-bottom: 5%;
     }
 `
 
@@ -40,7 +44,7 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
 `
 
 export const Parent = styled.section`
@@ -77,4 +81,10 @@ export const Select = styled.select<ISelect>`
         min-height: 20px;
         padding: 3px;
     }
+`
+
+export const Button = styled.button`
+    padding: 10px;
+    margin: auto;
+    
 `

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-import { Container, Form, FormDiv, Input, Label, Parent, Select } from "./Style/Styles"
+import { Button, Container, Form, FormDiv, Input, Label, Parent, Select } from "./Style/Styles"
 
 interface ICountryFetch {
   code: string,
@@ -57,7 +57,6 @@ const App = () => {
     }).then(resp => resp.json())
       .then(data => {
         setCities(data)
-        console.log(data[0])
       })
       .catch(err => console.log(err))
   }, [])
@@ -71,8 +70,6 @@ const App = () => {
 
     setFilteredCities(filterCities)
   }, [selectedCountry])
-
-  console.log(filteredCities)
 
   return (
     <Container>
@@ -116,7 +113,7 @@ const App = () => {
           <Parent>
             <Label>Cidade</Label>
             <Select>
-              <option value='' hidden>{!selectedCountry ? "Selecione um pais" : "Selecione uma cidade"}</option>
+              <option value='' hidden>{!selectedCountry ? "Selecione um pais primeiramente" : "Selecione uma cidade"}</option>
               {selectedCountry && filteredCities.map((city, index) => {
                 return (
                   <option key={index} value={city.id}>{city.name}</option>
@@ -126,6 +123,9 @@ const App = () => {
           </Parent>
 
         </Form>
+
+        <Button>Enviar</Button>
+
       </FormDiv>
     </Container>
   )
