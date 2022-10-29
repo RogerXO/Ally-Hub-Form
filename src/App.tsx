@@ -27,7 +27,6 @@ const App = () => {
 
   const [selectedCountry, setSelectedCountry] = useState<string>()
   const [selectedCity, setSelectedCity] = useState<string>()
-  // const [filteredCities, setFilteredCities] = useState<ICityFetch[]>([])
 
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
@@ -39,11 +38,13 @@ const App = () => {
   const isPhoneNumberInvalid = phoneNumber.length < 11
   const isCpfInvalid = cpf.length < 11
 
-  const filteredCities: ICityFetch[] = selectedCountry
+  const filteredCities: ICityFetch[] = selectedCountry != undefined
     ? cities.filter((city) => {
       return city.country_code == selectedCountry
     })
     : []
+
+  console.log('renderizou')
 
   //Input validations
   const getSubmitState = (): InputState => {
@@ -64,8 +65,6 @@ const App = () => {
   const spanColor = getSubmitState().color
   const isDisabled = getSubmitState().disabled
 
-  console.log('renderizou')
-
   //Countries and cities fetch
   useEffect(() => {
     fetch("https://amazon-api.sellead.com/country", {
@@ -76,6 +75,7 @@ const App = () => {
     }).then(resp => resp.json())
       .then(data => {
         setCountries(data)
+        console.log(data)
       })
       .catch(err => console.log(err))
 
@@ -91,16 +91,6 @@ const App = () => {
       })
       .catch(err => console.log(err))
   }, [])
-
-  // useEffect(() => {
-  //   const filterCities = () => {
-  //     return cities.filter((city) => {
-  //       return city.country_code == selectedCountry
-  //     })
-  //   }
-
-  //   setFilteredCities(filterCities)
-  // }, [selectedCountry])
 
   return (
     <Container>

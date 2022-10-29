@@ -82,6 +82,7 @@ export const InputField = styled.input.attrs<IInputProps>(props => { type: { pro
 export const Span = styled.span<InputProps>`
     font-size: 11px;
     color: black ;
+    transition: all 1seg;
 
     ${(props) => props.color && COLOR[props.color]}
 `
