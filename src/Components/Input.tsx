@@ -9,9 +9,10 @@ export type InputProps = {
     value?: string,
     spanText?: string,
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    color?: "success" | "error"
 }
 
-export const Input = ({ label, type, placeholder, value, spanText, onChange }: InputProps) => {
+export const Input = ({ label, type, placeholder, value, color, spanText, onChange }: InputProps) => {
     return (
         <Parent>
             <Label>{label}</Label>
@@ -21,7 +22,7 @@ export const Input = ({ label, type, placeholder, value, spanText, onChange }: I
                 value={value}
                 onChange={onChange}
             ></InputField>
-            <Span>{spanText}</Span>
+            <Span color={color}>{spanText}</Span>
         </Parent>
     )
 }

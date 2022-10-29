@@ -82,6 +82,8 @@ export const InputField = styled.input.attrs<IInputProps>(props => { type: { pro
 export const Span = styled.span<InputProps>`
     font-size: 11px;
     color: black ;
+
+    ${(props) => props.color && COLOR[props.color]}
 `
 
 export const ValidationSpan = styled.span<SpanProps>`

@@ -18,6 +18,11 @@ interface ICityFetch {
   name_ptbr: string
 }
 
+interface InputState {
+  color: "success" | "error",
+  disabled: boolean
+}
+
 const App = () => {
 
   const [countries, setCountries] = useState<ICountryFetch[]>([])
@@ -32,17 +37,29 @@ const App = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("")
   const [cpf, setCpf] = useState<string>("")
 
-  const [isDisabled, setIsDisabled] = useState<boolean>(true)
-  const [spanColor, setSpanColor] = useState<"success" | "error">("error")
+  const isNameInvalid = name.length < 4
+  const isEmailInvalid = email.length < 10
+  const isPhoneNumberInvalid = phoneNumber.length < 11
+  const isCpfInvalid = cpf.length < 11
 
-  // const ReadyInput = (label: string, type: InputProps, placeholder: string) => {
-  //   return (
-  //     <Parent>
-  //       <Label>{label}</Label>
-  //       <Input type={type.type} placeholder={placeholder}></Input>
-  //     </Parent>
-  //   )
-  // }
+  //Input validations
+  const getSubmitState = (): InputState => {
+    if (isNameInvalid) return validationError()
+    if (isEmailInvalid) return validationError()
+    if (isPhoneNumberInvalid) return validationError()
+    if (isCpfInvalid) return validationError()
+    if (!selectedCity) return validationError()
+    if (!selectedCountry) return validationError()
+
+    return { color: "success", disabled: false }
+  }
+
+  const validationError: () => InputState = () => {
+    return { color: "error", disabled: true }
+  }
+
+  const spanColor = getSubmitState().color
+  const isDisabled = getSubmitState().disabled
 
   //Countries fetch
   useEffect(() => {
@@ -82,28 +99,6 @@ const App = () => {
     setFilteredCities(filterCities)
   }, [selectedCountry])
 
-  const validationError = () => {
-    setIsDisabled(true)
-    setSpanColor("error")
-  }
-
-  const validationSuccess = () => {
-    setIsDisabled(false)
-    setSpanColor("success")
-  }
-
-  //Fields validation
-  useEffect(() => {
-    if (name.length < 4) return validationError()
-    if (email.length < 10) return validationError()
-    if (phoneNumber.length < 11) return validationError()
-    if (cpf.length < 11) return validationError()
-    if (!selectedCity) return validationError()
-    if (!selectedCountry) return validationError()
-
-    validationSuccess()
-  }, [name, email, phoneNumber, cpf, selectedCountry, selectedCity])
-
   return (
     <Container>
       <FormDiv>
@@ -118,6 +113,7 @@ const App = () => {
             value={name}
             spanText="Pelo menos 4 caracteres"
             onChange={(e) => setName(e.target.value)}
+            color={isNameInvalid ? "error" : "success"}
           ></Input>
 
           <Input
@@ -127,6 +123,7 @@ const App = () => {
             value={email}
             spanText="Pelo menos 10 caracteres"
             onChange={(e) => setEmail(e.target.value)}
+            color={isEmailInvalid ? "error" : "success"}
           ></Input>
 
           <Input
@@ -136,6 +133,7 @@ const App = () => {
             value={phoneNumber}
             spanText="Pelo menos 11 caracteres"
             onChange={(e) => setPhoneNumber(e.target.value)}
+            color={isPhoneNumberInvalid ? "error" : "success"}
           ></Input>
 
           <Input
@@ -145,6 +143,7 @@ const App = () => {
             value={cpf}
             spanText="Pelo menos 11 caracteres"
             onChange={(e) => setCpf(e.target.value)}
+            color={isCpfInvalid ? "error" : "success"}
           ></Input>
 
           <Parent>
