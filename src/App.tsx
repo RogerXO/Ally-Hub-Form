@@ -92,6 +92,7 @@ const App = () => {
     setSpanColor("success")
   }
 
+
   //Fields validation
   useEffect(() => {
     if (name.length < 4) return validationError()
@@ -103,10 +104,6 @@ const App = () => {
 
     validationSuccess()
   }, [name, email, phoneNumber, cpf, selectedCountry, selectedCity])
-
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    return
-  }
 
   return (
     <Container>
@@ -156,9 +153,7 @@ const App = () => {
             <Select value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)} >
               <option value='' hidden>Selecione</option>
               {countries.map((country, index) => {
-                return (
-                  <option key={index} value={country.code}>{country.name_ptbr}</option>
-                )
+                return (<option key={index} value={country.code}>{country.name_ptbr}</option>)
               })}
             </Select>
           </Parent>
@@ -166,13 +161,11 @@ const App = () => {
           <Parent>
             <Label>Cidade</Label>
             <Select value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
-              <option value='' hidden>{
-                !selectedCountry ? "Primeiro, selecione um pais" : "Selecione uma cidade"
-              }</option>
+              <option value='' hidden>
+                {!selectedCountry ? "Primeiro, selecione um pais" : filteredCities.length == 0 ? "Nenhuma cidade cadastrada" : "Selecione uma cidade"}
+              </option>
               {selectedCountry && filteredCities.map((city, index) => {
-                return (
-                  <option key={index} value={city.id}>{city.name}</option>
-                )
+                return (<option key={index} value={city.id}>{city.name}</option>)
               })}
             </Select>
           </Parent>
@@ -181,7 +174,7 @@ const App = () => {
             {isDisabled ? "Preencha todos os campos corretamente" : "Todos os campos foram preenchidos"}
           </ValidationSpan>
 
-          <Button onClick={handleButtonClick} disabled={isDisabled}>
+          <Button disabled={isDisabled}>
             Enviar
           </Button>
 
