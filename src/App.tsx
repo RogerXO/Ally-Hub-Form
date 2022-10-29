@@ -6,16 +6,13 @@ import { Container, Form, FormDiv, InputField, Label, Parent, Select, Validation
 
 interface ICountryFetch {
   code: string,
-  name: string,
   name_ptbr: string
 }
 
 interface ICityFetch {
-  code: string,
   country_code: string,
   id: number,
   name: string,
-  name_ptbr: string
 }
 
 interface InputState {
@@ -30,7 +27,7 @@ const App = () => {
 
   const [selectedCountry, setSelectedCountry] = useState<string>()
   const [selectedCity, setSelectedCity] = useState<string>()
-  const [filteredCities, setFilteredCities] = useState<ICityFetch[]>([])
+  // const [filteredCities, setFilteredCities] = useState<ICityFetch[]>([])
 
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
@@ -41,6 +38,12 @@ const App = () => {
   const isEmailInvalid = email.length < 10
   const isPhoneNumberInvalid = phoneNumber.length < 11
   const isCpfInvalid = cpf.length < 11
+
+  const filteredCities: ICityFetch[] = selectedCountry
+    ? cities.filter((city) => {
+      return city.country_code == selectedCountry
+    })
+    : []
 
   //Input validations
   const getSubmitState = (): InputState => {
@@ -61,7 +64,9 @@ const App = () => {
   const spanColor = getSubmitState().color
   const isDisabled = getSubmitState().disabled
 
-  //Countries fetch
+  console.log('renderizou')
+
+  //Countries and cities fetch
   useEffect(() => {
     fetch("https://amazon-api.sellead.com/country", {
       method: 'GET',
@@ -73,10 +78,8 @@ const App = () => {
         setCountries(data)
       })
       .catch(err => console.log(err))
-  }, [])
 
-  //Cities fetch
-  useEffect(() => {
+
     fetch("https://amazon-api.sellead.com/city", {
       method: 'GET',
       headers: {
@@ -89,15 +92,15 @@ const App = () => {
       .catch(err => console.log(err))
   }, [])
 
-  useEffect(() => {
-    const filterCities = () => {
-      return cities.filter((city) => {
-        return city.country_code == selectedCountry
-      })
-    }
+  // useEffect(() => {
+  //   const filterCities = () => {
+  //     return cities.filter((city) => {
+  //       return city.country_code == selectedCountry
+  //     })
+  //   }
 
-    setFilteredCities(filterCities)
-  }, [selectedCountry])
+  //   setFilteredCities(filterCities)
+  // }, [selectedCountry])
 
   return (
     <Container>
@@ -151,7 +154,9 @@ const App = () => {
             <Select value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)} >
               <option value='' hidden>Selecione</option>
               {countries.map((country, index) => {
-                return (<option key={index} value={country.code}>{country.name_ptbr}</option>)
+                return (
+                  <option key={index} value={country.code}>{country.name_ptbr}</option>
+                )
               })}
             </Select>
           </Parent>
@@ -160,10 +165,17 @@ const App = () => {
             <Label>Cidade destino:</Label>
             <Select value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
               <option value='' hidden>
-                {!selectedCountry ? "Primeiro, selecione um pais" : filteredCities.length == 0 ? "Nenhuma cidade cadastrada" : "Selecione uma cidade"}
+                {!selectedCountry
+                  ? "Primeiro, selecione um pais"
+                  : filteredCities.length == 0
+                    ? "Nenhuma cidade cadastrada"
+                    : "Selecione uma cidade"
+                }
               </option>
               {selectedCountry && filteredCities.map((city, index) => {
-                return (<option key={index} value={city.id}>{city.name}</option>)
+                return (
+                  <option key={index} value={city.id}>{city.name}</option>
+                )
               })}
             </Select>
           </Parent>
