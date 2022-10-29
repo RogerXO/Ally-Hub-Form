@@ -51,8 +51,7 @@ export const Form = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    margin-bottom: 2%;
+    justify-content: space-between;
 `
 
 export const Parent = styled.section`
@@ -80,7 +79,8 @@ export const Span = styled.span<InputProps>`
 export const ValidationSpan = styled.span<SpanProps>`
     transition: all 1seg;
     font-size: 11px;
-    margin-bottom: 3%;
+    align-self: center;
+    margin: 3% 0 1%;
 
     ${(props) => props.color && COLOR[props.color]}
 `
@@ -109,10 +109,12 @@ export const ButtonContainer = styled.button<ButtonProps>`
     cursor: pointer;
     border: none;
     font-weight: bold;
+    font-size: 16px;
+    align-self: center;
     outline: none;
-    transition: all 1s;
     color: rgb(36, 119, 36);
     background-color: rgb(170, 214, 170);
+    transition: all 1s;
 
     ${(props) => props.disabled && DISABLED};
 `

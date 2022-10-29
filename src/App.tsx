@@ -177,16 +177,15 @@ const App = () => {
             </Select>
           </Parent>
 
+          <ValidationSpan color={spanColor}>
+            {isDisabled ? "Preencha todos os campos corretamente" : "Todos os campos foram preenchidos"}
+          </ValidationSpan>
+
+          <Button onClick={handleButtonClick} disabled={isDisabled}>
+            Enviar
+          </Button>
+
         </Form>
-
-        <ValidationSpan color={spanColor}>
-          {isDisabled ? "Preencha todos os campos corretamente" : "Todos os campos foram preenchidos"}
-        </ValidationSpan>
-
-        <Button onClick={handleButtonClick} disabled={isDisabled}>
-          Enviar
-        </Button>
-
       </FormDiv>
     </Container>
   )
