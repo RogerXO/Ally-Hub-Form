@@ -124,7 +124,7 @@ const App = () => {
           <Input
             label="Email"
             type="email"
-            placeholder="email"
+            placeholder="Email"
             value={email}
             spanText="Pelo menos 10 caracteres"
             onChange={(e) => setEmail(e.target.value)}

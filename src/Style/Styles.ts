@@ -69,6 +69,14 @@ export const InputField = styled.input.attrs<IInputProps>(props => { type: { pro
     height: 100%;
     width: 75%;
     padding: 5px;
+    ::-webkit-inner-spin-button{
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+    ::-webkit-outer-spin-button{
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
 `
 
 export const Span = styled.span<InputProps>`
