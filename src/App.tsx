@@ -92,7 +92,6 @@ const App = () => {
     setSpanColor("success")
   }
 
-
   //Fields validation
   useEffect(() => {
     if (name.length < 4) return validationError()
@@ -149,7 +148,7 @@ const App = () => {
           ></Input>
 
           <Parent>
-            <Label>Pais</Label>
+            <Label>Pais destino:</Label>
             <Select value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)} >
               <option value='' hidden>Selecione</option>
               {countries.map((country, index) => {
@@ -159,7 +158,7 @@ const App = () => {
           </Parent>
 
           <Parent>
-            <Label>Cidade</Label>
+            <Label>Cidade destino:</Label>
             <Select value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
               <option value='' hidden>
                 {!selectedCountry ? "Primeiro, selecione um pais" : filteredCities.length == 0 ? "Nenhuma cidade cadastrada" : "Selecione uma cidade"}
