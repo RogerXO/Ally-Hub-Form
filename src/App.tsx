@@ -75,7 +75,6 @@ const App = () => {
     }).then(resp => resp.json())
       .then(data => {
         setCountries(data)
-        console.log(data)
       })
       .catch(err => console.log(err))
 
